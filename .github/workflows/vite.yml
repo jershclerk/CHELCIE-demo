@@ -70,7 +70,7 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Vite
-        run: ${{ steps.detect-package-manager.outputs.runner }} tsc -b || true && vite build
+        run: ${{ steps.detect-package-manager.outputs.runner }} tsc -b || true && npx vite build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
