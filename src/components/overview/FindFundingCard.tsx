@@ -1,26 +1,35 @@
+import { ArrowRight, Compass } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import illustration from "@/assets/find-funding-illustration.png"
+import { GrainyGlow } from "@/components/GrainyGlow"
 
-export function FindFundingCard() {
+type FindFundingCardProps = {
+  onStart?: () => void
+}
+
+export function FindFundingCard({ onStart }: FindFundingCardProps) {
   return (
-    <div className="relative flex h-[168px] w-full items-center justify-between overflow-hidden rounded-[20px] bg-white p-6">
-      <div className="flex flex-col items-start gap-6">
-        <p className="text-[17px] tracking-[-0.43px] text-black">
+    <div className="relative flex h-[168px] w-full items-center justify-between overflow-hidden rounded-[18px] bg-white/65 p-6 backdrop-blur-md">
+      <GrainyGlow width={600} height={168} glowOpacity={0.35} className="pointer-events-none absolute top-0 left-0 z-0" />
+
+      <div className="relative z-10 flex flex-col items-start gap-3">
+        <p className="text-[13px] tracking-[-0.08px] text-black/70">
           Discover your next funding in seconds
         </p>
-        <p className="text-3xl font-semibold tracking-tight text-black">
+        <p className="font-arizona text-2xl font-semibold tracking-[-0.25px] text-black">
           Find opportunities now
         </p>
-        <Button className="rounded-full bg-chelcie-blue1 px-4 text-white hover:bg-chelcie-blue1/90">
+        <Button
+          onClick={onStart}
+          className="gap-1.5 rounded-full bg-chelcie-primary-button px-4 text-white hover:bg-chelcie-primary-button/90 active:scale-95"
+        >
           Start now
+          <ArrowRight className="size-3.5" />
         </Button>
       </div>
 
-      <img
-        src={illustration}
-        alt=""
-        className="h-[170px] w-[195px] shrink-0 object-contain"
-      />
+      <div className="relative z-10 flex h-[120px] w-[140px] shrink-0 items-center justify-center rounded-[14px] bg-black/5">
+        <Compass className="size-8 text-black/25" strokeWidth={1.5} />
+      </div>
     </div>
   )
 }

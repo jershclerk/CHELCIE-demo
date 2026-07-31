@@ -1,44 +1,63 @@
-import { Home, BarChart2, Search, Radar } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { GrainyGlow } from "@/components/GrainyGlow"
 import { cn } from "@/lib/utils"
 
+export type Page = "home" | "programs" | "discover" | "tracking" | "memo"
+
 const navItems = [
-  { label: "Home", icon: Home, active: true },
-  { label: "Your Programs", icon: BarChart2, active: false },
-  { label: "Discover Opportunities", icon: Search, active: false },
-  { label: "Track Opportunities", icon: Radar, active: false },
+  { label: "Home", page: "home" as const, clickable: true },
+  { label: "Track Opportunities", page: "tracking" as const, clickable: true },
+  { label: "Your Programs", page: "programs" as const, clickable: true },
+  { label: "Discover Opportunities", page: "discover" as const, clickable: true },
 ]
 
-export function TopNav() {
-  return (
-    <header className="sticky top-4 z-10 ml-[120px] mr-10 flex h-14 items-center justify-between rounded-[28px] border-b border-chelcie-separator bg-white/65 px-10 shadow-[0px_4px_16px_0px_rgba(0,0,0,0.08)] backdrop-blur-md">
-      <span
-        className="bg-clip-text text-2xl font-bold text-transparent"
-        style={{ backgroundImage: "linear-gradient(135deg, #2f17ff, #030110)" }}
-      >
-        Chelcie
-      </span>
+type TopNavProps = {
+  activePage: Page
+  onNavigate: (page: Page) => void
+}
 
-      <nav className="flex items-center gap-6">
-        {navItems.map(({ label, icon: Icon, active }) => (
-          <button
-            key={label}
-            type="button"
-            className={cn(
-              "flex items-center gap-2 whitespace-nowrap text-xl font-bold transition-colors",
-              active ? "text-chelcie-blue1" : "text-chelcie-label-secondary hover:text-foreground"
-            )}
-          >
-            <Icon className="size-6 shrink-0" strokeWidth={2} />
-            {label}
-          </button>
-        ))}
+export function TopNav({ activePage, onNavigate }: TopNavProps) {
+  return (
+    <header className="sticky top-0 z-10 flex h-14 w-full items-center justify-between border-b border-chelcie-separator bg-white/65 px-10 backdrop-blur-md">
+      <GrainyGlow width={346} height={56} className="pointer-events-none absolute top-0 left-0 z-0" />
+
+      <button
+        type="button"
+        onClick={() => onNavigate("home")}
+        className="relative z-10 flex items-center gap-2"
+      >
+        <span className="font-suisse text-2xl font-medium text-black">CHELCIE</span>
+        <span className="rounded-full bg-black/5 px-2 py-0.5 text-[11px] font-semibold tracking-[0.02em] text-black/50 uppercase">
+          Beta
+        </span>
+      </button>
+
+      <nav className="relative z-10 flex items-center gap-5">
+        {navItems.map(({ label, page, clickable }) => {
+          const active = clickable && page === activePage
+          return (
+            <button
+              key={label}
+              type="button"
+              onClick={clickable && page ? () => onNavigate(page) : undefined}
+              className={cn(
+                "font-suisse whitespace-nowrap text-xs tracking-[0.15px] transition-colors",
+                active
+                  ? "font-semibold text-black underline decoration-2 underline-offset-[6px]"
+                  : "font-normal text-black/70 hover:text-black",
+                clickable ? "cursor-pointer" : "cursor-default"
+              )}
+            >
+              {label}
+            </button>
+          )
+        })}
       </nav>
 
-      <div className="flex items-center gap-3">
-        <span className="text-sm font-medium text-foreground">Harvard Chan C-CHANGE</span>
-        <Avatar size="lg" className="size-9">
-          <AvatarFallback className="bg-chelcie-maroon text-sm font-medium text-white">
+      <div className="relative z-10 flex items-center gap-3">
+        <span className="font-arizona text-sm font-semibold text-foreground">Harvard C-CHANGE</span>
+        <Avatar size="sm">
+          <AvatarFallback className="bg-chelcie-maroon text-xs font-semibold text-white">
             HC
           </AvatarFallback>
         </Avatar>
