@@ -64,7 +64,7 @@ jobs:
 
       - name: Build with Vite
         # Write Vite output into ./out so the upload step can find it
-        run: ${{ steps.detect-package-manager.outputs.runner }} tsc -b || true && npx vite build --outDir out
+        run: ${{ steps.detect-package-manager.outputs.runner }} tsc -b || true && npx vite build --outDir out --base /Chelcie-demo/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
