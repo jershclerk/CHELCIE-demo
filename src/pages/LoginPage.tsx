@@ -35,8 +35,8 @@ export function LoginPage({ onNavigateToSignUp }: LoginPageProps) {
         </button>
       </div>
 
-      <div className="flex w-full flex-1 flex-col items-center justify-center px-4 pb-24 pt-20">
-        <div className="flex w-full max-w-[540px] flex-col items-start gap-8 border border-border bg-background p-6 sm:p-10">
+      <div className="flex w-full flex-1 flex-col items-center px-4 pb-24 pt-12">
+        <div className="flex w-full max-w-[540px] flex-col items-start gap-8 bg-background p-6 sm:p-10">
           <div className="flex w-full flex-col items-center gap-2 text-center">
             <p className="text-2xl font-bold leading-8 text-foreground">Welcome to CHELCIE</p>
             <p className="text-sm text-muted-foreground">Select who you are to sign in instantly</p>
