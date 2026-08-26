@@ -11,7 +11,7 @@ function App() {
     return <SignUpPage onNavigateToLogin={() => setView("login")} />
   }
 
-  return <LoginPage onNavigateToSignUp={() => setView("signup")} />
+  return <LoginPage />
 }
 
 export default App

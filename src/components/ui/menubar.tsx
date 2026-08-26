@@ -181,7 +181,7 @@ const MenubarLabel = React.forwardRef<
 >(({ className, inset, ...props }, ref) => (
   <MenubarPrimitive.Label
     ref={ref}
-    className={cn("px-2 py-1.5 font-mono text-[10px] font-normal uppercase tracking-[0.16em]", inset && "pl-8", className)}
+    className={cn("px-2 py-1.5 font-mono text-[10px] font-normal tracking-[0.16em]", inset && "pl-8", className)}
     {...props}
   />
 ));

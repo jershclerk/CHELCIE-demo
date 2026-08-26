@@ -1,7 +1,24 @@
-import { useState } from "react"
+import { useState, type FormEvent } from "react"
 import { Plus } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { cn } from "@/lib/utils"
 
 type OrgMember = {
@@ -16,12 +33,82 @@ const members: OrgMember[] = [
   { name: "Jamie Taylor", initial: "J", avatarColor: "#29a699", role: "Editor" },
 ]
 
-type LoginPageProps = {
-  onNavigateToSignUp?: () => void
+const ROLE_OPTIONS = ["Admin", "Editor", "Viewer"]
+
+function AddMemberDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [role, setRole] = useState("")
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault()
+    setName("")
+    setEmail("")
+    setRole("")
+    onOpenChange(false)
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[440px]">
+        <DialogHeader>
+          <DialogTitle>Add another member</DialogTitle>
+          <DialogDescription>Invite someone to your organization on CHELCIE.</DialogDescription>
+        </DialogHeader>
+        <form id="add-member-form" onSubmit={handleSubmit} className="flex flex-col gap-4 py-2">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="member-name">Name</Label>
+            <Input
+              id="member-name"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              placeholder="Jane Doe"
+              autoComplete="name"
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="member-email">Email address</Label>
+            <Input
+              id="member-email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="jane@organization.org"
+              autoComplete="email"
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="member-role">Role</Label>
+            <Select value={role} onValueChange={setRole}>
+              <SelectTrigger id="member-role">
+                <SelectValue placeholder="Select a role" />
+              </SelectTrigger>
+              <SelectContent>
+                {ROLE_OPTIONS.map((option) => (
+                  <SelectItem key={option} value={option}>
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </form>
+        <DialogFooter>
+          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            Cancel
+          </Button>
+          <Button type="submit" form="add-member-form" disabled={!name || !email || !role}>
+            Send invite
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
 }
 
-export function LoginPage({ onNavigateToSignUp }: LoginPageProps) {
+export function LoginPage() {
   const [selectedMember, setSelectedMember] = useState<string | null>(null)
+  const [isAddMemberOpen, setIsAddMemberOpen] = useState(false)
 
   return (
     <div className="flex min-h-screen w-full flex-col items-start bg-background">
@@ -78,7 +165,7 @@ export function LoginPage({ onNavigateToSignUp }: LoginPageProps) {
 
             <button
               type="button"
-              onClick={onNavigateToSignUp}
+              onClick={() => setIsAddMemberOpen(true)}
               className="flex h-[76px] w-full items-center gap-4 rounded-md border border-dashed border-border bg-background p-4 text-left transition-colors hover:bg-accent/50"
             >
               <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent">
@@ -95,6 +182,8 @@ export function LoginPage({ onNavigateToSignUp }: LoginPageProps) {
           )}
         </div>
       </div>
+
+      <AddMemberDialog open={isAddMemberOpen} onOpenChange={setIsAddMemberOpen} />
     </div>
   )
 }
