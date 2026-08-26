@@ -88,9 +88,11 @@ export function LoginPage({ onNavigateToSignUp }: LoginPageProps) {
             </button>
           </div>
 
-          <Button type="button" disabled={!selectedMember} className="w-full">
-            Go to CHELCIE
-          </Button>
+          {selectedMember && (
+            <Button type="button" className="w-full">
+              Go to CHELCIE
+            </Button>
+          )}
         </div>
       </div>
     </div>
