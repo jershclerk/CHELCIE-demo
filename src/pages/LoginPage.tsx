@@ -59,7 +59,7 @@ function AddMemberDialog({ open, onOpenChange }: { open: boolean; onOpenChange: 
           <DialogTitle>Add another member</DialogTitle>
           <DialogDescription>Invite someone to your organization on CHELCIE.</DialogDescription>
         </DialogHeader>
-        <form id="add-member-form" onSubmit={handleSubmit} className="flex flex-col gap-4 py-2">
+        <form id="add-member-form" onSubmit={handleSubmit} className="flex flex-col gap-6 py-2">
           <div className="flex flex-col gap-2">
             <Label htmlFor="member-name">Name</Label>
             <Input
