@@ -4,7 +4,7 @@ export const greeting = {
 }
 
 export const programBalance = {
-  total: "$2.15M",
+  total: "$99M",
   goal: "$8,000,000",
   fundedPercent: 27,
   underPursuitPercent: 42,

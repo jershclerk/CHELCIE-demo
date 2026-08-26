@@ -11,7 +11,6 @@ import {
   NEEDS_ASSIGNEE_OWNER,
   TRACKING_STATUSES,
   TRACKING_STATUS_BADGE_STYLES,
-  statusColor,
   trackedOpportunities,
   type TrackedOpportunity,
   type TrackingStatus,
