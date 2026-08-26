@@ -46,7 +46,7 @@ const MenubarTrigger = React.forwardRef<
   <MenubarPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex cursor-default select-none items-center rounded-sm px-3 py-1 font-mono font-normal tracking-[0.12em] text-xs outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+      "flex cursor-default select-none items-center rounded-sm px-3 py-1 font-mono font-normal tracking-normal text-xs outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
       className,
     )}
     {...props}
@@ -181,7 +181,7 @@ const MenubarLabel = React.forwardRef<
 >(({ className, inset, ...props }, ref) => (
   <MenubarPrimitive.Label
     ref={ref}
-    className={cn("px-2 py-1.5 font-mono text-[10px] font-normal tracking-[0.16em]", inset && "pl-8", className)}
+    className={cn("px-2 py-1.5 font-mono text-[10px] font-normal tracking-normal", inset && "pl-8", className)}
     {...props}
   />
 ));

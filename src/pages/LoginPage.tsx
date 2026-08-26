@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react"
 import { Plus } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
   DialogContent,
@@ -12,13 +13,6 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { cn } from "@/lib/utils"
 
 type OrgMember = {
@@ -33,18 +27,28 @@ const members: OrgMember[] = [
   { name: "Jamie Taylor", initial: "J", avatarColor: "#29a699", role: "Editor" },
 ]
 
-const ROLE_OPTIONS = ["Admin", "Editor", "Viewer"]
+const CAPABILITY_OPTIONS = [
+  { id: "view-pipeline", label: "View programs & opportunities" },
+  { id: "edit-programs", label: "Edit programs & opportunities" },
+  { id: "draft-outreach", label: "Draft and send outreach" },
+  { id: "manage-members", label: "Manage team members" },
+  { id: "view-reports", label: "View funding reports" },
+]
 
 function AddMemberDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
-  const [role, setRole] = useState("")
+  const [capabilities, setCapabilities] = useState<string[]>([])
+
+  const toggleCapability = (id: string, checked: boolean) => {
+    setCapabilities((current) => (checked ? [...current, id] : current.filter((item) => item !== id)))
+  }
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
     setName("")
     setEmail("")
-    setRole("")
+    setCapabilities([])
     onOpenChange(false)
   }
 
@@ -77,27 +81,29 @@ function AddMemberDialog({ open, onOpenChange }: { open: boolean; onOpenChange: 
               autoComplete="email"
             />
           </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="member-role">Role</Label>
-            <Select value={role} onValueChange={setRole}>
-              <SelectTrigger id="member-role">
-                <SelectValue placeholder="Select a role" />
-              </SelectTrigger>
-              <SelectContent>
-                {ROLE_OPTIONS.map((option) => (
-                  <SelectItem key={option} value={option}>
-                    {option}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="flex flex-col gap-3">
+            <Label>Capabilities</Label>
+            <div className="flex flex-col gap-3">
+              {CAPABILITY_OPTIONS.map((capability) => (
+                <div key={capability.id} className="flex items-center gap-2">
+                  <Checkbox
+                    id={capability.id}
+                    checked={capabilities.includes(capability.id)}
+                    onCheckedChange={(checked) => toggleCapability(capability.id, checked === true)}
+                  />
+                  <label htmlFor={capability.id} className="text-sm font-medium text-foreground">
+                    {capability.label}
+                  </label>
+                </div>
+              ))}
+            </div>
           </div>
         </form>
         <DialogFooter>
           <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button type="submit" form="add-member-form" disabled={!name || !email || !role}>
+          <Button type="submit" form="add-member-form" disabled={!name || !email || capabilities.length === 0}>
             Send invite
           </Button>
         </DialogFooter>
