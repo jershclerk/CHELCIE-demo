@@ -84,7 +84,7 @@ export function LoginPage({ onNavigateToSignUp }: LoginPageProps) {
               <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent">
                 <Plus className="size-[18px] text-foreground" />
               </span>
-              <span className="text-sm font-medium text-muted-foreground">Add another member</span>
+              <span className="text-sm font-medium text-secondary-gray">Add another member</span>
             </button>
           </div>
 
