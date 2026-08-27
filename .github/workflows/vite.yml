@@ -20,56 +20,50 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout original demo (main)
         uses: actions/checkout@v4
+        with:
+          path: original-demo
 
-      - name: Detect package manager
-        id: detect-package-manager
-        run: |
-          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
-            echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "command=install" >> $GITHUB_OUTPUT
-            echo "runner=yarn" >> $GITHUB_OUTPUT
-            exit 0
-          elif [ -f "${{ github.workspace }}/package.json" ]; then
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
-            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
-            exit 0
-          else
-            echo "Unable to determine package manager"
-            exit 1
-          fi
+      - name: Checkout new demo (redesign-shadcn-v2)
+        uses: actions/checkout@v4
+        with:
+          ref: redesign-shadcn-v2
+          path: new-demo
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        # removed Next.js-specific injection (was static_site_generator: next)
 
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          # cache dependencies (node_modules or other package manager cache)
-          path: |
-            node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}
+      - name: Install & build original demo
+        working-directory: original-demo
+        run: |
+          npm ci
+          npx tsc -b
+          npx vite build --outDir out --base /CHELCIE-demo/old/
 
-      - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Install & build new demo
+        working-directory: new-demo
+        run: |
+          npm ci
+          npx tsc -b
+          npx vite build --outDir out --base /CHELCIE-demo/new/
 
-      - name: Build with Vite
-        # Write Vite output into ./out so the upload step can find it
-        run: ${{ steps.detect-package-manager.outputs.runner }} tsc -b && npx vite build --outDir out --base /CHELCIE-demo/
+      - name: Assemble site
+        run: |
+          mkdir -p site/old site/new
+          cp -r original-demo/landing/. site/
+          cp -r original-demo/out/. site/old/
+          cp -r new-demo/out/. site/new/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./site
 
   deploy:
     environment:
