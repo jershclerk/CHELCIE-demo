@@ -1,17 +1,15 @@
-import { useState } from "react"
-import { LoginPage } from "@/pages/LoginPage"
-import { SignUpPage } from "@/pages/SignUpPage"
+import type { OrgMember } from "@/pages/LoginPage"
+import { DashboardPage } from "@/pages/DashboardPage"
 
-type AuthView = "login" | "signup"
+const DEFAULT_MEMBER: OrgMember = {
+  name: "Mary Rice",
+  initial: "M",
+  avatarColor: "#A51C30",
+  role: "Admin",
+}
 
 function App() {
-  const [view, setView] = useState<AuthView>("login")
-
-  if (view === "signup") {
-    return <SignUpPage onNavigateToLogin={() => setView("login")} />
-  }
-
-  return <LoginPage />
+  return <DashboardPage member={DEFAULT_MEMBER} onLogout={() => {}} />
 }
 
 export default App
