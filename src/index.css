@@ -1,8 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/inter";
-@import "@fontsource/roboto-mono";
 
 @font-face {
   font-family: "Suisse Intl";
@@ -29,13 +26,6 @@
   font-family: "Suisse Intl";
   src: url("./assets/fonts/Suisse/SuisseIntl-SemiBold.otf") format("opentype");
   font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "ABC Arizona";
-  src: url("./assets/fonts/ABC Arizona/ABC Arizona Mix Variable Unlicensed Trial.ttf") format("truetype-variations");
-  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -67,47 +57,23 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --radius: 0.625rem;
+  --radius: 0.5rem;
 
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.985 0 0);
+  --sidebar-primary-foreground: oklch(0 0 0);
+  --sidebar-accent: oklch(1 0 0);
+  --sidebar-accent-foreground: oklch(0 0 0);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: oklch(0.985 0 0);
 
-  /* Chelcie brand tokens, pulled from the Figma file */
-  --chelcie-cyan: #083839;
-  --chelcie-orange: #ef5f00;
-  --chelcie-slate: #526571;
-  --chelcie-charcoal: #1f2a30;
-  --chelcie-light-gray: #e1e5ea;
-  --chelcie-electric-blue: #006dff;
-
-  /* Tokens added for the "overview-desktop" (2064:819) design */
-  /* --chelcie-blue1 recolored to Apple DESIGN.md's Action Blue (colors.primary) */
-  --chelcie-blue1: #0066cc;
-  --chelcie-blue1-focus: #0071e3;
-  /* CTA button color (solid bg on primary buttons, border+text on outline/secondary
-     buttons) — split from --chelcie-blue1 so it can be swapped independently. Badges,
-     nav active state, and progress-bar fills still use --chelcie-blue1 and are unaffected.
-     Set to black per request (21:1 contrast on white, well above AA); revert to #0066cc
-     to restore the Apple-blue CTAs without touching anything else. */
-  --chelcie-primary-button: #000000;
-  --chelcie-violet: #6e56cf;
-  --chelcie-orange2: #f76b15;
-  --chelcie-green: #34c759;
-  --chelcie-red: #ff383c;
-  --chelcie-lavender: #9faaff;
+  /* Brand accent — keep this one Chelcie color as the through-line from the old prototype */
   --chelcie-teal: #50dbbd;
-  /* Darker teal for text on white — #50dbbd fails contrast at small sizes */
   --chelcie-teal-text: #0f766e;
-  --chelcie-gray6: #f2f2f7;
-  --chelcie-maroon: #a51c30;
-  --chelcie-label-secondary: rgba(60, 60, 67, 0.6);
-  --chelcie-separator: #e6e6e6;
+
+  /* Secondary grey — darker, more readable than the default muted-foreground */
+  --secondary-gray: oklch(0.45 0 0);
 }
 
 .dark {
@@ -140,11 +106,9 @@
 }
 
 @theme inline {
-  --font-heading: var(--font-sans);
-  --font-sans: 'Inter Variable', 'Inter', sans-serif;
-  --font-suisse: 'Suisse Intl', 'Inter Variable', sans-serif;
-  --font-arizona: 'ABC Arizona', 'Inter Variable', sans-serif;
-  --font-devtool: 'Roboto Mono', monospace;
+  --font-sans: 'Suisse Intl', system-ui, sans-serif;
+  --font-display: 'Suisse Intl', system-ui, sans-serif;
+  --font-mono: 'Suisse Intl', system-ui, sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -179,25 +143,9 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  --color-chelcie-cyan: var(--chelcie-cyan);
-  --color-chelcie-orange: var(--chelcie-orange);
-  --color-chelcie-slate: var(--chelcie-slate);
-  --color-chelcie-charcoal: var(--chelcie-charcoal);
-  --color-chelcie-light-gray: var(--chelcie-light-gray);
-  --color-chelcie-electric-blue: var(--chelcie-electric-blue);
-  --color-chelcie-blue1: var(--chelcie-blue1);
-  --color-chelcie-primary-button: var(--chelcie-primary-button);
-  --color-chelcie-violet: var(--chelcie-violet);
-  --color-chelcie-orange2: var(--chelcie-orange2);
-  --color-chelcie-green: var(--chelcie-green);
-  --color-chelcie-red: var(--chelcie-red);
-  --color-chelcie-lavender: var(--chelcie-lavender);
   --color-chelcie-teal: var(--chelcie-teal);
   --color-chelcie-teal-text: var(--chelcie-teal-text);
-  --color-chelcie-gray6: var(--chelcie-gray6);
-  --color-chelcie-maroon: var(--chelcie-maroon);
-  --color-chelcie-label-secondary: var(--chelcie-label-secondary);
-  --color-chelcie-separator: var(--chelcie-separator);
+  --color-secondary-gray: var(--secondary-gray);
 }
 
 @layer base {
@@ -210,20 +158,4 @@
   html {
     @apply font-sans;
   }
-}
-
-/* Subtle grain overlay for card surfaces — adds tactile depth to flat white cards */
-.noise-overlay {
-  position: relative;
-  isolation: isolate;
-}
-.noise-overlay::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0.15;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix in='noise' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 -4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
