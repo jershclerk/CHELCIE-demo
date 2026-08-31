@@ -27,7 +27,7 @@
 
       .wrap {
         width: 100%;
-        max-width: 720px;
+        max-width: 1000px;
         text-align: center;
       }
 
@@ -46,8 +46,14 @@
 
       .cards {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
         gap: 20px;
+      }
+
+      @media (max-width: 860px) {
+        .cards {
+          grid-template-columns: 1fr 1fr;
+        }
       }
 
       @media (max-width: 600px) {
@@ -97,6 +103,11 @@
         color: #f472b6;
       }
 
+      .tag.fun {
+        background: rgba(59, 130, 246, 0.15);
+        color: #60a5fa;
+      }
+
       .card h2 {
         margin: 4px 0 0;
         font-size: 18px;
@@ -144,9 +155,16 @@
           <p>The shadcn/ui redesign — dashboard, Funding Priorities, and application flow.</p>
           <span class="cta">Open new demo &rarr;</span>
         </a>
+
+        <a class="card" href="./atlas/">
+          <span class="tag fun">Side quest</span>
+          <h2>Atlas</h2>
+          <p>An interactive constellation explorer — the Chelcie score as a sun, opportunities as planets you pan and zoom through.</p>
+          <span class="cta">Open Atlas &rarr;</span>
+        </a>
       </div>
 
-      <footer>Both versions are live builds of this repository.</footer>
+      <footer>All three versions are live builds of this repository.</footer>
     </div>
   </body>
 </html>
