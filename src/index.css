@@ -1,0 +1,279 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/inter";
+@import "@fontsource/roboto-mono";
+@import "@fontsource/roboto-mono/500.css";
+
+@font-face {
+  font-family: "Suisse Intl";
+  src: url("./assets/fonts/Suisse/SuisseIntl-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Suisse Intl";
+  src: url("./assets/fonts/Suisse/SuisseIntl-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Suisse Intl";
+  src: url("./assets/fonts/Suisse/SuisseIntl-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Suisse Intl";
+  src: url("./assets/fonts/Suisse/SuisseIntl-SemiBold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "ABC Arizona";
+  src: url("./assets/fonts/ABC Arizona/ABC Arizona Mix Variable Unlicensed Trial.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --radius: 0.625rem;
+
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  /* Chelcie brand tokens, pulled from the Figma file */
+  --chelcie-cyan: #083839;
+  --chelcie-orange: #ef5f00;
+  --chelcie-slate: #526571;
+  --chelcie-charcoal: #1f2a30;
+  --chelcie-light-gray: #e1e5ea;
+  --chelcie-electric-blue: #006dff;
+
+  /* Tokens added for the "overview-desktop" (2064:819) design */
+  /* --chelcie-blue1 recolored to Apple DESIGN.md's Action Blue (colors.primary) */
+  --chelcie-blue1: #0066cc;
+  --chelcie-blue1-focus: #0071e3;
+  /* CTA button color (solid bg on primary buttons, border+text on outline/secondary
+     buttons) — split from --chelcie-blue1 so it can be swapped independently. Badges,
+     nav active state, and progress-bar fills still use --chelcie-blue1 and are unaffected.
+     Set to black per request (21:1 contrast on white, well above AA); revert to #0066cc
+     to restore the Apple-blue CTAs without touching anything else. */
+  --chelcie-primary-button: #000000;
+  --chelcie-violet: #6e56cf;
+  --chelcie-orange2: #f76b15;
+  --chelcie-green: #34c759;
+  --chelcie-red: #ff383c;
+  --chelcie-lavender: #9faaff;
+  --chelcie-teal: #50dbbd;
+  /* Darker teal for text on white — #50dbbd fails contrast at small sizes */
+  --chelcie-teal-text: #0f766e;
+  --chelcie-gray6: #f2f2f7;
+  --chelcie-maroon: #a51c30;
+  --chelcie-label-secondary: rgba(60, 60, 67, 0.6);
+  --chelcie-separator: #e6e6e6;
+
+  /* Constellation explorer — theme tokens. `ink` drives both text and glass-card
+     tinting (glass = ink at low opacity), so the same Tailwind classes (e.g.
+     bg-ink/15, text-ink/60) work correctly in every theme without per-component
+     branching. Dark is the app's default identity; [data-theme] overrides it —
+     this is a self-contained toggle, not tied to OS preference. */
+  --scene: #0a0b0d;
+  --scene-tint-1: rgba(110, 86, 207, 0.14);
+  --scene-tint-2: rgba(62, 242, 201, 0.09);
+  --ink: #ffffff;
+  --neon: #3ef2c9;
+  --neon-text: #0a3d33;
+  --font-mono: 'Roboto Mono', monospace;
+  --sun-gradient: radial-gradient(circle at 42% 36%, #fffce8 0%, #c8f0ac 28%, #6edfa0 62%, #2bc9a9 100%);
+  --card-accent-gradient: linear-gradient(135deg, #dff7ef 0%, #f4fbf9 60%, #ffffff 100%);
+  --rich-panel-bg: #f4f5f7;
+}
+
+[data-theme="light"] {
+  --scene: #eef1f4;
+  --scene-tint-1: rgba(110, 86, 207, 0.08);
+  --scene-tint-2: rgba(14, 156, 126, 0.06);
+  --ink: #10151a;
+  --neon: #0e9c7e;
+  --neon-text: #ffffff;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: 'Inter Variable', 'Inter', sans-serif;
+  --font-suisse: 'Suisse Intl', 'Inter Variable', sans-serif;
+  --font-arizona: 'ABC Arizona', 'Inter Variable', sans-serif;
+  --font-devtool: var(--font-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --color-chelcie-cyan: var(--chelcie-cyan);
+  --color-chelcie-orange: var(--chelcie-orange);
+  --color-chelcie-slate: var(--chelcie-slate);
+  --color-chelcie-charcoal: var(--chelcie-charcoal);
+  --color-chelcie-light-gray: var(--chelcie-light-gray);
+  --color-chelcie-electric-blue: var(--chelcie-electric-blue);
+  --color-chelcie-blue1: var(--chelcie-blue1);
+  --color-chelcie-primary-button: var(--chelcie-primary-button);
+  --color-chelcie-violet: var(--chelcie-violet);
+  --color-chelcie-orange2: var(--chelcie-orange2);
+  --color-chelcie-green: var(--chelcie-green);
+  --color-chelcie-red: var(--chelcie-red);
+  --color-chelcie-lavender: var(--chelcie-lavender);
+  --color-chelcie-teal: var(--chelcie-teal);
+  --color-chelcie-teal-text: var(--chelcie-teal-text);
+  --color-chelcie-gray6: var(--chelcie-gray6);
+  --color-chelcie-maroon: var(--chelcie-maroon);
+  --color-chelcie-label-secondary: var(--chelcie-label-secondary);
+  --color-chelcie-separator: var(--chelcie-separator);
+
+  --color-scene: var(--scene);
+  --color-ink: var(--ink);
+  --color-neon: var(--neon);
+  --color-neon-text: var(--neon-text);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* Constellation explorer — the sun's gentle pulse is the only ambient loop
+   left; cards and the background are both static now. */
+@keyframes sun-pulse {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.035); filter: brightness(1.08); }
+}
+
+.constellation[data-sun-paused="true"] .sun-pulse {
+  animation-play-state: paused;
+}
+
+.sun-pulse { animation: sun-pulse 5.5s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sun-pulse {
+    animation: none !important;
+  }
+}
+
+/* Subtle grain overlay for card surfaces — adds tactile depth to flat white cards */
+.noise-overlay {
+  position: relative;
+  isolation: isolate;
+}
+.noise-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.15;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix in='noise' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 -4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
