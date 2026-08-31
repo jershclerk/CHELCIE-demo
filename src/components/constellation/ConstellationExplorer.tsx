@@ -189,9 +189,6 @@ export function ConstellationExplorer() {
       <header className="pointer-events-none absolute top-0 left-0 z-40 flex h-14 w-full items-center justify-between px-5">
         <div className="pointer-events-auto flex items-center gap-2.5">
           <span className="font-suisse text-xl font-medium text-ink">CHELCIE</span>
-          <span className="bg-neon/20 text-neon border-neon/40 font-devtool rounded-full border px-2.5 py-[3px] text-[11px] font-normal">
-            Live
-          </span>
         </div>
         <div className="pointer-events-auto flex items-center gap-2">
           <div className="flex items-center gap-0.5 rounded-full border border-ink/10 bg-ink/10 p-1 backdrop-blur-xl">
