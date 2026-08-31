@@ -31,6 +31,12 @@ jobs:
           ref: redesign-shadcn-v2
           path: new-demo
 
+      - name: Checkout atlas demo (atlas)
+        uses: actions/checkout@v4
+        with:
+          ref: atlas
+          path: atlas-demo
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -53,12 +59,20 @@ jobs:
           npx tsc -b
           npx vite build --outDir out --base /CHELCIE-demo/new/
 
+      - name: Install & build atlas demo
+        working-directory: atlas-demo
+        run: |
+          npm ci
+          npx tsc -b
+          npx vite build --outDir out --base /CHELCIE-demo/atlas/
+
       - name: Assemble site
         run: |
-          mkdir -p site/old site/new
+          mkdir -p site/old site/new site/atlas
           cp -r original-demo/landing/. site/
           cp -r original-demo/out/. site/old/
           cp -r new-demo/out/. site/new/
+          cp -r atlas-demo/out/. site/atlas/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
